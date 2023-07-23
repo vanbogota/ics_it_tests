@@ -34,7 +34,7 @@ CREATE TABLE dbo.Basket
  Quantity INT 
 	CONSTRAINT CHK_Basket_Quantity
 	CHECK (Quantity > 0),
- Value INT 
+ Value MONEY 
 	CONSTRAINT CHK_Basket_Value
 	CHECK (Value > 0),
  PurchaseDate DATETIME DEFAULT(SYSDATETIME()),
