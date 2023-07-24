@@ -8,32 +8,33 @@ CREATE PROC dbo.usp_MakeFamilyPurchase
 	@FamilySurName varchar(255)
 AS
 BEGIN
+	SET NOCOUNT ON
 
-DECLARE @FamilyID INT
+	DECLARE @FamilyID INT
 
-SELECT @FamilyID = ID_identity
-FROM dbo.Family
-WHERE SurName = @FamilySurName 
+	SELECT @FamilyID = ID_identity
+	FROM dbo.Family
+	WHERE SurName = @FamilySurName 
 
-IF @FamilyID IS NULL
-BEGIN
- PRINT N'Ошибка. Такой семьи нет.';
-END
+	IF @FamilyID IS NULL
+	BEGIN
+	 PRINT N'Ошибка. Такой семьи нет.';
+	END
 
-DECLARE @FamilyBudget MONEY
-DECLARE @TotalValue MONEY
+	DECLARE @FamilyBudget MONEY
+	DECLARE @TotalValue MONEY
 
-SELECT @FamilyBudget = BudgetValue
-FROM dbo.Family
-WHERE ID_identity = @FamilyID;
+	SELECT @FamilyBudget = BudgetValue
+	FROM dbo.Family
+	WHERE ID_identity = @FamilyID;
 
-SELECT @TotalValue = SUM(Value)
-FROM dbo.Basket
-WHERE ID_Family = @FamilyID;
+	SELECT @TotalValue = SUM(Value)
+	FROM dbo.Basket
+	WHERE ID_Family = @FamilyID;
 
-UPDATE dbo.Family
-SET BudgetValue = @FamilyBudget - @TotalValue
-WHERE ID_identity = @FamilyID
+	UPDATE dbo.Family
+	SET BudgetValue = @FamilyBudget - @TotalValue
+	WHERE ID_identity = @FamilyID
 
 END
 GO
