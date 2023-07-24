@@ -1,49 +1,50 @@
-USE [ics-it_tests];
+use [ics-it_tests];
 
-IF OBJECT_ID('dbo.Basket', 'U') IS NOT NULL
-DROP TABLE dbo.Basket;
+if OBJECT_ID('dbo.Basket', 'U') is not null
+	drop table dbo.Basket;
 
-IF OBJECT_ID('dbo.SKU', 'U') IS NOT NULL
-DROP TABLE dbo.SKU;
+if OBJECT_ID('dbo.SKU', 'U') is not null
+	drop table dbo.SKU;
 
-IF OBJECT_ID('dbo.Family', 'U') IS NOT NULL
-DROP TABLE dbo.Family;
+if OBJECT_ID('dbo.Family', 'U') is not null
+	drop table dbo.Family;
 
-CREATE TABLE dbo.SKU
+create table dbo.SKU
 (
- ID_identity INT IDENTITY(1,1),
- Code AS 's' + CAST(ID_identity AS VARCHAR),
- Name VARCHAR(max) NOT NULL,
- CONSTRAINT AK_Code UNIQUE(Code),
- CONSTRAINT PK_SKU PRIMARY KEY(ID_identity)
+ ID_identity int identity(1,1),
+ Code as 's' + CAST(ID_identity as varchar),
+ Name varchar(max) not null,
+ constraint AK_Code unique(Code),
+ constraint PK_SKU primary key(ID_identity)
 );
 
-CREATE TABLE dbo.Family
+create table dbo.Family
 (
- ID_identity INT IDENTITY(1,1),
- SurName VARCHAR(max) NOT NULL,
- BudgetValue MONEY,
- CONSTRAINT PK_Family PRIMARY KEY(ID_identity)
+ ID_identity int identity(1,1),
+ SurName varchar(max) not null,
+ BudgetValue money,
+ constraint PK_Family primary key(ID_identity)
 );
 
-CREATE TABLE dbo.Basket
+create table dbo.Basket
 (
- ID_identity INT IDENTITY(1,1),
- ID_SKU INT,	
- ID_Family INT,
- Quantity INT 
-	CONSTRAINT CHK_Basket_Quantity
-	CHECK (Quantity > 0),
- Value MONEY 
-	CONSTRAINT CHK_Basket_Value
-	CHECK (Value > 0),
- PurchaseDate DATETIME DEFAULT(SYSDATETIME()),
- DiscountValue NUMERIC(18,5),
- CONSTRAINT FK_Basket_SKU 
-	FOREIGN KEY(ID_SKU)
-	REFERENCES dbo.SKU(ID_identity),
- CONSTRAINT FK_Basket_Family
-	FOREIGN KEY(ID_Family)
-	REFERENCES dbo.Family(ID_identity),
- CONSTRAINT PK_Basket PRIMARY KEY(ID_identity)
+ ID_identity int identity(1,1),
+ ID_SKU int,	
+ ID_Family int,
+ Quantity int 
+	constraint CHK_Basket_Quantity
+	check (Quantity > 0),
+ Value money 
+	constraint CHK_Basket_Value
+	check (Value > 0),
+ PurchaseDate datetime default(SYSDATETIME()),
+ DiscountValue numeric(18,2),
+ constraint FK_Basket_SKU 
+	foreign key(ID_SKU)
+	references dbo.SKU(ID_identity),
+ constraint FK_Basket_Family
+	foreign key(ID_Family)
+	references dbo.Family(ID_identity),
+ constraint PK_Basket 
+	primary key(ID_identity)
 );
