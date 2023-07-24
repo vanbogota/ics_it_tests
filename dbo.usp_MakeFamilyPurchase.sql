@@ -1,40 +1,45 @@
-USE [ics-it_tests]
+use [ics-it_tests]
 
-IF OBJECT_ID('dbo.usp_MakeFamilyPurchase','P') IS NOT NULL
-DROP PROC dbo.usp_MakeFamilyPurchase;
-GO
+if OBJECT_ID('dbo.usp_MakeFamilyPurchase','P') is not null
+	drop proc dbo.usp_MakeFamilyPurchase;
+go
 
-CREATE PROC dbo.usp_MakeFamilyPurchase
+create proc dbo.usp_MakeFamilyPurchase
 	@FamilySurName varchar(255)
-AS
-BEGIN
-	SET NOCOUNT ON
+as
+begin
+	set nocount on
 
-	DECLARE @FamilyID INT
+	declare 
+		@FamilyID int
 
-	SELECT @FamilyID = ID_identity
-	FROM dbo.Family
-	WHERE SurName = @FamilySurName 
+	select 
+		@FamilyID = ID_identity
+	from dbo.Family
+	where SurName = @FamilySurName 
 
-	IF @FamilyID IS NULL
-	BEGIN
-	 PRINT N'Ошибка. Такой семьи нет.';
-	END
+	if @FamilyID is null
+		begin
+			print N'Ошибка. Такой семьи нет.';
+		end
 
-	DECLARE @FamilyBudget MONEY
-	DECLARE @TotalValue MONEY
+	declare 
+		@FamilyBudget money
+	declare
+		@TotalValue money
 
-	SELECT @FamilyBudget = BudgetValue
-	FROM dbo.Family
-	WHERE ID_identity = @FamilyID;
+	select 
+		@FamilyBudget = BudgetValue
+	from dbo.Family
+	where ID_identity = @FamilyID;
 
-	SELECT @TotalValue = SUM(Value)
-	FROM dbo.Basket
-	WHERE ID_Family = @FamilyID;
+	select 
+		@TotalValue = SUM(Value)
+	from dbo.Basket
+	where ID_Family = @FamilyID;
 
-	UPDATE dbo.Family
-	SET BudgetValue = @FamilyBudget - @TotalValue
-	WHERE ID_identity = @FamilyID
+	update dbo.Family
+	set BudgetValue = @FamilyBudget - @TotalValue
+	where ID_identity = @FamilyID
 
-END
-GO
+end
