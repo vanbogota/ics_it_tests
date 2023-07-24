@@ -11,7 +11,7 @@ begin
 	declare 
 		@price decimal(18, 2);
 	select 
-		@price = CAST(SUM(b.Value) as decimal(18, 2))/CAST(SUM(b.Quantity) as decimal(18,2))
+		@price = cast(sum(b.Value) as decimal(18, 2))/cast(sum(b.Quantity) as decimal(18,2))
 	from dbo.Basket b
 	where b.ID_SKU = @ID_SKU;
 	return @price;
