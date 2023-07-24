@@ -34,12 +34,11 @@ begin
 	where ID_identity = @FamilyID;
 
 	select 
-		@TotalValue = SUM(Value)
+		@TotalValue = sum(Value)
 	from dbo.Basket
 	where ID_Family = @FamilyID;
 
 	update dbo.Family
 	set BudgetValue = @FamilyBudget - @TotalValue
 	where ID_identity = @FamilyID
-
 end
