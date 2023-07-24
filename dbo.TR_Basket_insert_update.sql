@@ -6,7 +6,7 @@ go
 
 create trigger dbo.TR_Basket_insert_update
 on dbo.Basket
-after insert
+after insert, update
 as
 begin
 	set nocount on;
