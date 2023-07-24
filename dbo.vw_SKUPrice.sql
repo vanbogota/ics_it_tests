@@ -7,9 +7,9 @@ go
 create view dbo.vw_SKUPrice
 as
 select 
-	ID_identity, 
-	Code, 
-	Name, 
-	dbo.udf_GetSKUPrice(ID_identity) as Price
+	ID_identity
+	,Code 
+	,Name 
+	,dbo.udf_GetSKUPrice(ID_identity) as Price
 from dbo.SKU
 
