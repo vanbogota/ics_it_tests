@@ -5,6 +5,7 @@ if object_id('dbo.udf_GetSKUPrice') is not null
 
 go
 
+-- Функция для расчета стоимости одного продукта
 create function dbo.udf_GetSKUPrice (@ID_SKU int)
 returns decimal(18, 2)
 as
