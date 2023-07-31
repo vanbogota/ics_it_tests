@@ -1,3 +1,4 @@
+-- Создание исходных таблиц
 use [ics-it_tests];
 
 if object_id('dbo.Basket', 'U') is not null
