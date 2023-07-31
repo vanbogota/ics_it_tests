@@ -5,6 +5,7 @@ if object_id('dbo.usp_MakeFamilyPurchase','P') is not null
 
 go
 
+-- Процедура при вызове обновляет бюджет семьи после покупки продукта
 create proc dbo.usp_MakeFamilyPurchase
 	@FamilySurName varchar(255)
 as
